@@ -1,0 +1,149 @@
+{
+  "name": "hadron-nobind-example-project",
+  "version": "1.0.0",
+  "description": "Example template for using nobind17 for a Node.js C++ addon (hadron version)",
+  "type": "module",
+  "main": "./lib/example.cjs",
+  "types": "./lib/example.d.cts",
+  "scripts": {
+    "test": "npx mocha",
+    "lint": "clang-format -i src/*.cc src/*.h && eslint test",
+    "prepare": "npx xpm install && npx xpm run prepare && npx xpm run build",
+    "gcov": "mkdir -p coverage && cd coverage && gcov -o ../build/Debug/obj.target/example/build -o ../build/Debug/obj.target/example/src ../src/* ../build/*",
+    "lcov": "npx c8 report --reporter=text-lcov > coverage/tests.lcov"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mmomtchev/hadron-nobind-example-project.git"
+  },
+  "keywords": [
+    "node-api",
+    "napi",
+    "nobind"
+  ],
+  "author": "Momtchil Momtchev <momtchil@momtchev.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mmomtchev/hadron-nobind-example-project/issues"
+  },
+  "homepage": "https://github.com/mmomtchev/hadron-nobind-example-project#readme",
+  "dependencies": {
+    "nobind17": "^1.2.1",
+    "node-addon-api": "^8.0.0",
+    "xpm": "^0.19.1"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.3.16",
+    "@types/mocha": "^10.0.7",
+    "@types/node": "^20.14.9",
+    "@typescript-eslint/eslint-plugin": "^7.16.1",
+    "@typescript-eslint/parser": "^7.16.1",
+    "c8": "^10.1.2",
+    "chai": "^5.1.1",
+    "eslint": "^8.57.0",
+    "eslint-plugin-mocha": "^10.4.3",
+    "mocha": "^10.6.0",
+    "ts-loader": "^9.5.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.3"
+  },
+  "xpack": {
+    "minimumXpmRequired": "0.19.1",
+    "properties": {
+      "module_name": "example",
+      "buildFolderRelativePath": "{{ 'build' | path_join: properties.buildType | to_filename | downcase }}",
+      "installFolderPath": "{{ '/' | path_join: properties.cwd | path_join: 'lib' | path_join: 'binding' }}",
+      "toolchain": "system",
+      "platformId": "{{ os.platform | concat: '-' | concat: os.arch }}",
+      "commandConanBuildEnv": {
+        "win32": "{{ properties.buildFolderRelativePath }}\\conanbuild.bat && ",
+        "linux": ". {{ properties.buildFolderRelativePath }}/conanbuild.sh && ",
+        "darwin": ". {{ properties.buildFolderRelativePath }}/conanbuild.sh && "
+      },
+      "commandShowEnv": {
+        "win32": "set",
+        "linux": "env",
+        "darwin": "env"
+      },
+      "commandInit": {
+        "win32": "IF NOT EXIST build ( mkdir build )",
+        "linux": "mkdir -p build",
+        "darwin": "mkdir -p build"
+      },
+      "cwd": "{{ path.sep | path_relative: '.' }}",
+      "argsConan": "--build=missing --settings=build_type={{ properties.buildType | capitalize }} -pr=./hadron/{{ properties.toolchain }}-{{ os.platform }}.profile",
+      "commandConanDependencies": "conan install . {{ properties.argsConan }} -of {{ properties.buildFolderRelativePath }}",
+      "commandConanLock": "conan lock create . {{ properties.argsConan }}",
+      "commandPrepare": "{{ properties.commandConanBuildEnv[os.platform] }} meson setup --backend ninja --buildtype {{ properties.buildType }} {{ properties.buildFolderRelativePath }} . -Dprefix={{ properties.installFolderPath }} --native-file hadron{{ path.sep }}conan.ini --native-file hadron{{ path.sep }}{{ properties.toolchain }}-{{ os.platform }}.ini --native-file {{ properties.buildFolderRelativePath }}/conan_meson_native.ini",
+      "commandConfigure": "meson configure {{ properties.buildFolderRelativePath }}",
+      "commandBuild": "{{ properties.commandConanBuildEnv[os.platform] }} meson compile -C {{ properties.buildFolderRelativePath }} -v",
+      "commandInstall": "meson install -C {{ properties.buildFolderRelativePath }}",
+      "commandClean": "meson compile -C {{ properties.buildFolderRelativePath }} --clean",
+      "verbose": "{% if env.npm_config_loglevel %}--verbose{% endif %}",
+      "scriptInstall": "npx prebuild-install -d {{ properties.verbose }} || ( npx xpm install && xpm run prepare --config native && xpm run build --config native )"
+    },
+    "actions": {
+      "npm-install": [
+        "{% if env.npm_config_loglevel %}{{ properties.commandShowEnv[os.platform] }}{% endif %}",
+        "{% unless env.npm_config_skip_native_example %}{{ properties.scriptInstallNative }}{% endunless %}"
+      ],
+      "prepare": "npx xpm run prepare --config release",
+      "configure": "{{ properties.commandConfigure }}",
+      "build": [
+        "{{ properties.commandBuild }}",
+        "{{ properties.commandInstall }}"
+      ],
+      "clean": "{{ properties.commandClean }}",
+      "lock": "{{ properties.commandConanLock }}",
+      "python": "python",
+      "meson": "meson",
+      "conan": "conan"
+    },
+    "buildConfigurations": {
+      "release": {
+        "properties": {
+          "buildType": "release"
+        },
+        "actions": {
+          "prepare": [
+            "{{ properties.commandConanDependencies }}",
+            "{{ properties.commandPrepare }}"
+          ]
+        }
+      },
+      "debug": {
+        "properties": {
+          "buildType": "debug"
+        },
+        "actions": {
+          "prepare": [
+            "{{ properties.commandConanDependencies }}",
+            "{{ properties.commandPrepare }}"
+          ]
+        }
+      }
+    },
+    "devDependencies": {
+      "@mmomtchev/meson-xpack": {
+        "specifier": "1.5.0-1",
+        "local": "link",
+        "platforms": "all"
+      },
+      "@mmomtchev/python-xpack": {
+        "specifier": "3.10.14-5",
+        "local": "link",
+        "platforms": "all"
+      },
+      "@mmomtchev/conan-xpack": {
+        "specifier": "2.3.2-5",
+        "local": "link",
+        "platforms": "all"
+      },
+      "@xpack-dev-tools/cmake": {
+        "specifier": "3.27.9-1.2",
+        "local": "link",
+        "platforms": "all"
+      }
+    }
+  }
+}
