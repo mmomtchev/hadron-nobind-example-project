@@ -40,7 +40,7 @@
     "@typescript-eslint/parser": "^7.16.1",
     "c8": "^10.1.2",
     "chai": "^5.1.1",
-    "eslint": "^9.7.0",
+    "eslint": "^8.57.0",
     "eslint-plugin-mocha": "^10.4.3",
     "mocha": "^10.6.0",
     "ts-loader": "^9.5.1",
@@ -51,7 +51,7 @@
     "minimumXpmRequired": "0.19.1",
     "properties": {
       "module_name": "example",
-      "buildFolderRelativePath": "{{ 'build' | path_join: properties.buildType | to_filename | downcase }}",
+      "buildFolderRelativePath": "{{ 'build' | to_filename | downcase }}",
       "installFolderPath": "{{ '/' | path_join: properties.cwd | path_join: 'lib' | path_join: 'binding' }}",
       "toolchain": "system",
       "platformId": "{{ os.platform | concat: '-' | concat: os.arch }}",
