@@ -151,7 +151,7 @@
         "platforms": "all"
       },
       "@mmomtchev/conan-xpack": {
-        "specifier": "2.3.2-5",
+        "specifier": "2.7.0-1",
         "local": "link",
         "platforms": "all"
       },
