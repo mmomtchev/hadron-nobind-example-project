@@ -73,15 +73,20 @@
         "linux": "mkdir -p build",
         "darwin": "mkdir -p build"
       },
+      "commandWipe": {
+        "win32": "rd /q /s",
+        "linux": "rm -rf",
+        "darwin": "rm -rf"
+      },
       "cwd": "{{ path.sep | path_relative: '.' }}",
       "argsConan": "--build=missing --settings=build_type={{ properties.buildType | capitalize }} -pr=./hadron/{{ properties.toolchain }}-{{ os.platform }}.profile",
-      "commandConanDependencies": "conan install . {{ properties.argsConan }} -of {{ properties.buildFolderRelativePath }}",
+      "commandConanDependencies": "conan install . {{ properties.argsConan }} -of {{ properties.buildFolderRelativePath }} ",
       "commandConanLock": "conan lock create . {{ properties.argsConan }}",
       "commandPrepare": "{{ properties.commandConanBuildEnv[os.platform] }} meson setup --backend ninja --buildtype {{ properties.buildType }} {{ properties.buildFolderRelativePath }} . -Dprefix={{ properties.installFolderPath }} --native-file hadron{{ path.sep }}conan.ini --native-file hadron{{ path.sep }}{{ properties.toolchain }}-{{ os.platform }}.ini --native-file {{ properties.buildFolderRelativePath }}/conan_meson_native.ini",
       "commandConfigure": "meson configure {{ properties.buildFolderRelativePath }}",
       "commandBuild": "{{ properties.commandConanBuildEnv[os.platform] }} meson compile -C {{ properties.buildFolderRelativePath }} -v",
       "commandInstall": "meson install -C {{ properties.buildFolderRelativePath }}",
-      "commandClean": "meson compile -C {{ properties.buildFolderRelativePath }} --clean",
+      "commandClean": "{{properties.commandWipe[os.platform]}} {{ properties.buildFolderRelativePath }}",
       "verbose": "{% if env.npm_config_loglevel %}--verbose{% endif %}",
       "scriptInstall": "npx prebuild-install -d {{ properties.verbose }} || ( npx xpm install && xpm run prepare --config native && xpm run build --config native )"
     },
@@ -115,14 +120,31 @@
         }
       },
       "debug": {
+        "inherit": [
+          "release"
+        ],
         "properties": {
           "buildType": "debug"
+        }
+      },
+      "xpack": {
+        "properties": {
+          "buildType": "release",
+          "toolchain": "clang"
         },
         "actions": {
           "prepare": [
             "{{ properties.commandConanDependencies }}",
             "{{ properties.commandPrepare }}"
+          ],
+          "build": [
+            "{{ properties.commandBuild }}",
+            "{{ properties.commandInstall }}"
           ]
+        },
+        "devDependencies": {
+          "@xpack-dev-tools/clang": "17.0.6-1.1",
+          "@xpack-dev-tools/windows-build-tools": "4.4.1-2.1"
         }
       }
     },
@@ -138,7 +160,7 @@
         "platforms": "all"
       },
       "@mmomtchev/conan-xpack": {
-        "specifier": "2.3.2-5",
+        "specifier": "2.7.0-1",
         "local": "link",
         "platforms": "all"
       },

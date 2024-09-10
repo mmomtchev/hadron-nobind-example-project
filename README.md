@@ -25,7 +25,18 @@ Run the unit tests:
 npm test
 ```
 
-# Code instrumentation
+## `xPack` build
+
+This project can be built using an entirely self-contained build environment that does not require an installed C++ compiler:
+
+```shell
+npm install
+npx xpm install --config xpack
+npx xpm run prepare --config xpack
+npx xpm run build --config xpack
+```
+
+## Code instrumentation
 
 Build with:
 
