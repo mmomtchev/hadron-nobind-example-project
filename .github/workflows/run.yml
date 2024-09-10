@@ -71,6 +71,7 @@ jobs:
     - name: Build
       run: |
         npm install
+        npx xpm run clean
         npx xpm install --config xpack
         npx xpm run prepare --config xpack
         npx xpm run build
