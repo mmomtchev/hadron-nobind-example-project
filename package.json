@@ -75,7 +75,7 @@
       },
       "cwd": "{{ path.sep | path_relative: '.' }}",
       "argsConan": "--build=missing --settings=build_type={{ properties.buildType | capitalize }} -pr=./hadron/{{ properties.toolchain }}-{{ os.platform }}.profile",
-      "commandConanDependencies": "conan install . {{ properties.argsConan }} -of {{ properties.buildFolderRelativePath }}",
+      "commandConanDependencies": "conan install . {{ properties.argsConan }} -of {{ properties.buildFolderRelativePath }} ",
       "commandConanLock": "conan lock create . {{ properties.argsConan }}",
       "commandPrepare": "{{ properties.commandConanBuildEnv[os.platform] }} meson setup --backend ninja --buildtype {{ properties.buildType }} {{ properties.buildFolderRelativePath }} . -Dprefix={{ properties.installFolderPath }} --native-file hadron{{ path.sep }}conan.ini --native-file hadron{{ path.sep }}{{ properties.toolchain }}-{{ os.platform }}.ini --native-file {{ properties.buildFolderRelativePath }}/conan_meson_native.ini",
       "commandConfigure": "meson configure {{ properties.buildFolderRelativePath }}",
@@ -115,14 +115,27 @@
         }
       },
       "debug": {
+        "inherit": [
+          "release"
+        ],
         "properties": {
           "buildType": "debug"
+        }
+      },
+      "xpack": {
+        "properties": {
+          "buildType": "release",
+          "toolchain": "clang"
         },
         "actions": {
           "prepare": [
             "{{ properties.commandConanDependencies }}",
             "{{ properties.commandPrepare }}"
           ]
+        },
+        "devDependencies": {
+          "@xpack-dev-tools/clang": "17.0.6-1.1",
+          "@xpack-dev-tools/windows-build-tools": "4.4.1-2.1"
         }
       }
     },
