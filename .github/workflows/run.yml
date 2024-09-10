@@ -74,7 +74,7 @@ jobs:
         npx xpm run clean
         npx xpm install --config xpack
         npx xpm run prepare --config xpack
-        npx xpm run build
+        npx xpm run build --config xpack
 
     - name: Test
       run: npm test

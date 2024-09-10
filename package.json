@@ -131,6 +131,10 @@
           "prepare": [
             "{{ properties.commandConanDependencies }}",
             "{{ properties.commandPrepare }}"
+          ],
+          "build": [
+            "{{ properties.commandBuild }}",
+            "{{ properties.commandInstall }}"
           ]
         },
         "devDependencies": {

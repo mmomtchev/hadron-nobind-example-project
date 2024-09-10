@@ -33,7 +33,7 @@ This project can be built using an entirely self-contained build environment tha
 npm install
 npx xpm install --config xpack
 npx xpm run prepare --config xpack
-npx xpm run build
+npx xpm run build --config xpack
 ```
 
 ## Code instrumentation
