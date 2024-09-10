@@ -73,6 +73,11 @@
         "linux": "mkdir -p build",
         "darwin": "mkdir -p build"
       },
+      "commandWipe": {
+        "win32": "rd /q /s",
+        "linux": "rm -rf",
+        "darwin": "rm -rf"
+      },
       "cwd": "{{ path.sep | path_relative: '.' }}",
       "argsConan": "--build=missing --settings=build_type={{ properties.buildType | capitalize }} -pr=./hadron/{{ properties.toolchain }}-{{ os.platform }}.profile",
       "commandConanDependencies": "conan install . {{ properties.argsConan }} -of {{ properties.buildFolderRelativePath }} ",
@@ -81,7 +86,7 @@
       "commandConfigure": "meson configure {{ properties.buildFolderRelativePath }}",
       "commandBuild": "{{ properties.commandConanBuildEnv[os.platform] }} meson compile -C {{ properties.buildFolderRelativePath }} -v",
       "commandInstall": "meson install -C {{ properties.buildFolderRelativePath }}",
-      "commandClean": "meson compile -C {{ properties.buildFolderRelativePath }} --clean",
+      "commandClean": "{{properties.commandWipe[os.platform]}} {{ properties.buildFolderRelativePath }}",
       "verbose": "{% if env.npm_config_loglevel %}--verbose{% endif %}",
       "scriptInstall": "npx prebuild-install -d {{ properties.verbose }} || ( npx xpm install && xpm run prepare --config native && xpm run build --config native )"
     },
