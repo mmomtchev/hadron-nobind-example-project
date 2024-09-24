@@ -25,9 +25,11 @@ Run the unit tests:
 npm test
 ```
 
-## `xPack` build
+## Self-contained `xPack` build (building on the end-user target host without expecting a C++ environment)
 
-This project can be built using an entirely self-contained build environment that does not require an installed C++ compiler:
+The `hadron` system includes support for building from source on the end-user target host without requiring anything but a working Node.js installation. Currently this feature is to be considered experimental and it is included in this template mostly for demonstration purposes. It will work out of the box for a simple project, but as you start ramping up advanced features and additional dependencies, you will probably have to fix problems. The build is implemented in the [`xpack`](https://github.com/mmomtchev/hadron-nobind-example-project/blob/main/.github/workflows/run.yml) build job in Github Actions. Be sure to check the notes from the [magickwand.js](https://github.com/mmomtchev/magickwand.js/blob/main/README.xPacks.md) package which contains a `xPack` build for a large project with many dependencies.
+
+To run the build manually:
 
 ```shell
 npm install
@@ -38,7 +40,7 @@ npx xpm run build --config xpack
 
 ## Code instrumentation
 
-Build with:
+For a debug build:
 
 ```shell
 npm install
