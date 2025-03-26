@@ -43,6 +43,7 @@ NOBIND_MODULE(example, m) {
       .cons<size_t>()
       .cons<const Blob &>()
       .def<&Blob::Fill>("fill")
+      .def<&Blob::Decompress>("decompress")
       // Use the wrappers instead of the original methods
       .ext<&Blob_Export>("export")
       .ext<&Blob_Write>("write")
