@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/mmomtchev/hadron-nobind-example-project#readme",
   "dependencies": {
-    "nobind17": "^1.2.1",
+    "nobind17": "github:mmomtchev/nobind",
     "node-addon-api": "^8.3.1",
     "xpm": "^0.20.8"
   },

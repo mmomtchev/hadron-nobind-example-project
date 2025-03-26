@@ -38,10 +38,31 @@ summary({'zlib': zlib}, section: 'npm options')
 # --------------------
 # Build the module
 # --------------------
-napi.extension_module(
+binary = napi.extension_module(
   module_name,
   sources,
   include_directories : [ 'src', 'node_modules/nobind17/include' ],
   install             : true,
   dependencies        : dependencies
 )
+
+# --------------------
+# Generate TypeScript
+# --------------------
+if get_option('b_sanitize') == 'none'
+  # If ASAN is enabled, node won't be able to load the module without it
+  node = find_program('node')
+  custom_target(
+    'example.d.cts',
+    output: 'example.d.cts',
+    input: binary,
+    command: [
+      node,
+      '-e', 'fs.writeFileSync(process.argv[2], require(path.resolve(process.argv[1])).__typescript)',
+      '@INPUT@',
+      '@OUTPUT@',
+    ],
+    install: true,
+    install_dir: '',
+  )
+endif
