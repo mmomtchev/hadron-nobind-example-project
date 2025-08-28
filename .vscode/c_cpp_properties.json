@@ -3,24 +3,47 @@
         {
             "name": "Linux",
             "includePath": [
+                "${env:HOME}/.cache/hadron/p/b/**",
+                "${env:HOME}/.cache/node-hadron/node/**",
                 "${workspaceFolder}/node_modules/nobind17/include",
-                "${workspaceFolder}/node_modules/node-addon-api",
-                "/usr/include/node"
+                "${workspaceFolder}/node_modules/node-addon-api"
+            ],
+            "defines": [
+                "HAVE_ZLIB"
             ],
             "compilerPath": "/usr/bin/gcc",
             "cStandard": "c17",
-            "cppStandard": "c++17"
+            "cppStandard": "c++20"
         },
         {
             "name": "macOS",
             "includePath": [
+                "${env:HOME}/Library/Caches/hadron/p/b/**",
+                "${env:HOME}/Library/Caches/node-hadron/node/**",
                 "${workspaceFolder}/node_modules/nobind17/include",
-                "${workspaceFolder}/node_modules/node-addon-api",
-                "/usr/local/include/node"
+                "${workspaceFolder}/node_modules/node-addon-api"
+            ],
+            "defines": [
+                "HAVE_ZLIB"
             ],
             "compilerPath": "/usr/bin/clang",
             "cStandard": "c17",
-            "cppStandard": "c++17"
+            "cppStandard": "c++20"
+        },
+        {
+            "name": "Windows",
+            "includePath": [
+                "${env:USERPROFILE}/AppData/Local/hadron/p/b/**",
+                "${env:USERPROFILE}/AppData/Local/node-hadron/node/**",
+                "${workspaceFolder}/node_modules/node-addon-api",
+                "${workspaceFolder}/node_modules/nobind17/include"
+            ],
+            "defines": [
+                "HAVE_ZLIB"
+            ],
+            "compilerPath": "cl.exe",
+            "cStandard": "c17",
+            "cppStandard": "c++20"
         }
     ],
     "version": 4
