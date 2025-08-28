@@ -150,17 +150,17 @@
     },
     "devDependencies": {
       "@mmomtchev/meson-xpack": {
-        "specifier": "1.5.1-2",
+        "specifier": "1.8.0-3",
         "local": "link",
         "platforms": "all"
       },
       "@mmomtchev/python-xpack": {
-        "specifier": "3.10.14-5",
+        "specifier": "3.12.11-2",
         "local": "link",
         "platforms": "all"
       },
       "@mmomtchev/conan-xpack": {
-        "specifier": "2.7.0-1",
+        "specifier": "2.18.1-2",
         "local": "link",
         "platforms": "all"
       },
