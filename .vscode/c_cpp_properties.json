@@ -11,6 +11,9 @@
             "defines": [
                 "HAVE_ZLIB"
             ],
+            "recursiveIncludes": {
+                "priority": "beforeSystemIncludes"
+            },
             "compilerPath": "/usr/bin/gcc",
             "cStandard": "c17",
             "cppStandard": "c++20"
@@ -26,6 +29,9 @@
             "defines": [
                 "HAVE_ZLIB"
             ],
+            "recursiveIncludes": {
+                "priority": "beforeSystemIncludes"
+            },
             "compilerPath": "/usr/bin/clang",
             "cStandard": "c17",
             "cppStandard": "c++20"
@@ -41,6 +47,9 @@
             "defines": [
                 "HAVE_ZLIB"
             ],
+            "recursiveIncludes": {
+                "priority": "beforeSystemIncludes"
+            },
             "compilerPath": "cl.exe",
             "cStandard": "c17",
             "cppStandard": "c++20"
