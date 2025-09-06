@@ -40,7 +40,7 @@ jobs:
       run: |
         npm install
         npx xpm run prepare --config native-debug
-        npx xpm run build
+        npx xpm run build --config native-debug
 
     - name: Test
       run: npm test
