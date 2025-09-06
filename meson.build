@@ -63,6 +63,6 @@ if get_option('b_sanitize') == 'none'
       '@OUTPUT@',
     ],
     install: true,
-    install_dir: '',
+    install_dir: '..',
   )
 endif

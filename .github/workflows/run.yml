@@ -40,7 +40,7 @@ jobs:
       run: |
         npm install
         npx xpm run clean
-        npx xpm run prepare --config debug
+        npx xpm run prepare --config native-debug
         npx xpm run build
 
     - name: Test
@@ -70,9 +70,9 @@ jobs:
       run: |
         npm install
         npx xpm run clean
-        npx xpm install --config xpack
-        npx xpm run prepare --config xpack
-        npx xpm run build --config xpack
+        npx xpm install --config native-xpack
+        npx xpm run prepare --config native-xpack
+        npx xpm run build --config native-xpack
 
     - name: Test
       run: npm test
@@ -94,7 +94,7 @@ jobs:
       run: |
         npm install
         rm -rf build
-        npx xpm run prepare --config debug
+        npx xpm run prepare --config native-debug
         npx xpm run configure -- -Db_sanitize=address
         npx xpm run build
 
@@ -119,7 +119,7 @@ jobs:
       run: |
         npm install
         rm -rf build
-        npx xpm run prepare --config debug
+        npx xpm run prepare --config native-debug
         npx xpm run configure -- -Db_coverage=true -Dbuildtype=debugoptimized '-Dcpp_args="--coverage -ftest-coverage"'
         npx xpm run build
 
