@@ -39,7 +39,6 @@ jobs:
     - name: Build
       run: |
         npm install
-        npx xpm run clean --config native-debug
         npx xpm run prepare --config native-debug
         npx xpm run build
 
@@ -69,7 +68,6 @@ jobs:
     - name: Build
       run: |
         npm install
-        npx xpm run clean --config native-xpack
         npx xpm install --config native-xpack
         npx xpm run prepare --config native-xpack
         npx xpm run build --config native-xpack
@@ -93,9 +91,8 @@ jobs:
     - name: Build
       run: |
         npm install
-        rm -rf build
         npx xpm run prepare --config native-debug
-        npx xpm run configure -- -Db_sanitize=address
+        npx xpm run configure --config native-debug -- -Db_sanitize=address
         npx xpm run build
 
     - name: Get ASAN library name
@@ -120,7 +117,7 @@ jobs:
         npm install
         rm -rf build
         npx xpm run prepare --config native-debug
-        npx xpm run configure -- -Db_coverage=true -Dbuildtype=debugoptimized '-Dcpp_args="--coverage -ftest-coverage"'
+        npx xpm run configure --config native-debug -- -Db_coverage=true -Dbuildtype=debugoptimized '-Dcpp_args="--coverage -ftest-coverage"'
         npx xpm run build
 
     - name: Test
