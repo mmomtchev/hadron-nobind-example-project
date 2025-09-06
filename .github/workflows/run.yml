@@ -39,7 +39,7 @@ jobs:
     - name: Build
       run: |
         npm install
-        npx xpm run clean
+        npx xpm run clean --config native-debug
         npx xpm run prepare --config native-debug
         npx xpm run build
 
@@ -69,7 +69,7 @@ jobs:
     - name: Build
       run: |
         npm install
-        npx xpm run clean
+        npx xpm run clean --config native-xpack
         npx xpm install --config native-xpack
         npx xpm run prepare --config native-xpack
         npx xpm run build --config native-xpack
