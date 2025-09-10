@@ -8,7 +8,7 @@
   "scripts": {
     "test": "npx mocha",
     "lint": "clang-format -i src/*.cc src/*.h && eslint test",
-    "install": "npx xpm run npm-install",
+    "prepare": "npx xpm run npm-install",
     "gcov": "mkdir -p coverage && cd coverage && gcov -o ../build/Debug/obj.target/example/build -o ../build/Debug/obj.target/example/src ../src/* ../build/*",
     "lcov": "npx c8 report --reporter=text-lcov > coverage/tests.lcov"
   },
