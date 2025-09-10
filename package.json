@@ -31,8 +31,7 @@
     "@mmomtchev/hadron": "^1.0.0",
     "@mmomtchev/xpm": "^0.21.0",
     "nobind17": "^2.0.0",
-    "node-addon-api": "^8.5.0",
-    "xpm": "^0.20.8"
+    "node-addon-api": "^8.5.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
