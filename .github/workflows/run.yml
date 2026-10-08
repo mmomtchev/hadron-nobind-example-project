@@ -15,7 +15,8 @@ jobs:
           - macos-15
           - macos-15-intel
           - windows-2022
-          - windows-2025
+          # Visual Studio 2026 requires hadron 1.2.0
+          #- windows-2025
 
     steps:
     - name: Checkout
