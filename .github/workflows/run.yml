@@ -20,7 +20,7 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
 
     - name: Build
       run: npm install
@@ -35,7 +35,7 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
 
     - name: Build
       run: |
@@ -64,7 +64,7 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
 
     - name: Build
       run: |
@@ -80,7 +80,7 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
     - name: Setup Node.js 24
       uses: actions/setup-node@v6
       with:
@@ -110,7 +110,7 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
 
     - name: Build
       run: |
@@ -140,7 +140,7 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
     - name: Setup Node.js
       uses: actions/setup-node@v6
     - name: Install the dependencies
